@@ -13,6 +13,9 @@ const V_STEP_3: float = 0.3
 
 const OPACTIY: float = 0.5
 
+enum HammerType { NONE = 0, SPLAT, CIRCLE }
+export var hammer_type: int = HammerType.SPLAT
+
 var color_layout: Dictionary
 
 onready var sprite = $Sprite
@@ -39,7 +42,7 @@ func _ready() -> void:
 	height = viewport.size.y
 	width = viewport.size.x
 	
-	counter.x = HALF_RADIUS
+	counter.x = -HALF_RADIUS
 	counter.y = HALF_RADIUS
 	
 	circle.color = current_color
@@ -67,16 +70,29 @@ func _process(delta: float) -> void:
 			should_toggle_off = false
 		else:
 			should_toggle_off = true
-#	circle.draw_position = counter
-#	if circle.visible:
-#		if should_toggle_off:
-#			circle.visible = false
-#			should_toggle_off = false
-#		else:
-#			should_toggle_off = true
+	circle.draw_position = counter
+	if circle.visible:
+		if should_toggle_off:
+			circle.visible = false
+			should_toggle_off = false
+		else:
+			should_toggle_off = true
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("switch_hammer_type"):
+		match hammer_type:
+			HammerType.SPLAT:
+				hammer_type = HammerType.CIRCLE
+			HammerType.CIRCLE:
+				hammer_type = HammerType.SPLAT
+			HammerType.NONE:
+				printerr("Invalid hammer type")
+		get_tree().set_input_as_handled()
 
 func _unhandled_key_input(event: InputEventKey):
-	if (not event.pressed or event.echo):
+#	if (not event.pressed or event.echo):
+#		return
+	if not event.pressed:
 		return
 	var value: float = ((event.scancode as float) / 100.0)
 	
@@ -144,13 +160,25 @@ func _unhandled_key_input(event: InputEventKey):
 		_:
 			current_color.a = 0.0
 	
-#	circle.visible = true
-#	circle.color = current_color
-#	circle.update()
-	sprite.visible = true
+	circle.color = current_color
 	sprite.modulate = current_color
-	sprite.frame = round(rand_range(0, 4))
-	sprite.rotation = randf() * 2 * PI
+	
+	match hammer_type:
+		HammerType.SPLAT:
+			_show_splat()
+		HammerType.CIRCLE:
+			_show_circle()
+		HammerType.RANDOM:
+			match round(randf()):
+				0.0:
+					_show_circle()
+				1.0:
+					_show_splat()
+#	circle.visible = true
+#	circle.update()
+#	sprite.visible = true
+#	sprite.frame = round(rand_range(0, 3))
+#	sprite.rotation = randf() * 2 * PI
 	
 	counter.x += HALF_RADIUS
 	if counter.x > width:
@@ -166,6 +194,15 @@ func _unhandled_key_input(event: InputEventKey):
 ###############################################################################
 # Private functions                                                           #
 ###############################################################################
+
+func _show_circle() -> void:
+	circle.visible = true
+	circle.update()
+
+func _show_splat() -> void:
+	sprite.visible = true
+	sprite.frame = round(rand_range(0, 3))
+	sprite.rotation = randf() * 2 * PI
 
 ###############################################################################
 # Public functions                                                            #
