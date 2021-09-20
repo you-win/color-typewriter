@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://screens/main_display.gd" type="Script" id=1]
+[ext_resource path="res://entities/paper_container.tscn" type="PackedScene" id=2]
+
+[node name="MainDisplay" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+render_target_clear_mode = 1
+render_target_update_mode = 3
+
+[node name="CanvasLayer" type="CanvasLayer" parent="ViewportContainer/Viewport"]
+
+[node name="ColorRect" type="ColorRect" parent="ViewportContainer/Viewport/CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+
+[node name="PaperContainer" parent="." instance=ExtResource( 2 )]
