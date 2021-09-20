@@ -60,14 +60,20 @@ func _ready() -> void:
 	}
 
 func _process(delta: float) -> void:
-	
-	circle.draw_position = counter
-	if circle.visible:
+	sprite.position = counter
+	if sprite.visible:
 		if should_toggle_off:
-			circle.visible = false
+			sprite.visible = false
 			should_toggle_off = false
 		else:
 			should_toggle_off = true
+#	circle.draw_position = counter
+#	if circle.visible:
+#		if should_toggle_off:
+#			circle.visible = false
+#			should_toggle_off = false
+#		else:
+#			should_toggle_off = true
 
 func _unhandled_key_input(event: InputEventKey):
 	if (not event.pressed or event.echo):
@@ -138,9 +144,13 @@ func _unhandled_key_input(event: InputEventKey):
 		_:
 			current_color.a = 0.0
 	
-	circle.visible = true
-	circle.color = current_color
-	circle.update()
+#	circle.visible = true
+#	circle.color = current_color
+#	circle.update()
+	sprite.visible = true
+	sprite.modulate = current_color
+	sprite.frame = round(rand_range(0, 4))
+	sprite.rotation = randf() * 2 * PI
 	
 	counter.x += HALF_RADIUS
 	if counter.x > width:
