@@ -28,8 +28,6 @@ var height: int
 var width: int
 
 var counter: Vector2 = Vector2.ZERO
-var x_counter: float = 0.0
-var y_counter: float = 0.0
 
 var current_color: Color = Color(1.0, 1.0, 1.0, OPACTIY)
 

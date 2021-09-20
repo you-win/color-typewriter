@@ -1,10 +1,11 @@
-extends ViewportContainer
-
-onready var paper: Control = $Viewport/CanvasLayer/Paper
+extends Sprite
 
 ###############################################################################
 # Builtin functions                                                           #
 ###############################################################################
+
+func _ready():
+	pass
 
 ###############################################################################
 # Connections                                                                 #
