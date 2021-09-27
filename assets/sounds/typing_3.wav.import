@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/typing_3.wav-e44daff4a5713be2f0209dbf8f6dc483.sample"
+
+[deps]
+
+source_file="res://assets/sounds/typing_3.wav"
+dest_files=[ "res://.import/typing_3.wav-e44daff4a5713be2f0209dbf8f6dc483.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

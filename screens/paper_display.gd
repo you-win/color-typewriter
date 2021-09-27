@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+onready var background: ColorRect = $ViewportContainer/Viewport/CanvasLayer/Background
 onready var paper_container: ViewportContainer = $PaperContainer
 onready var cursor: Sprite = $Cursor
 
@@ -29,3 +30,6 @@ func _input(event: InputEvent) -> void:
 ###############################################################################
 # Public functions                                                            #
 ###############################################################################
+
+func change_paper_color(color: Color) -> void:
+	background.color = color

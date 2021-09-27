@@ -14,7 +14,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 1024, 600 )
+size = Vector2( 1188, 840 )
 transparent_bg = true
 handle_input_locally = false
 render_target_clear_mode = 1

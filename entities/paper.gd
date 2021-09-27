@@ -1,5 +1,7 @@
 extends Control
 
+signal cursor_incremented(pos)
+
 const RADIUS: float = 50.0
 const HALF_RADIUS: float = RADIUS / 2
 
@@ -86,10 +88,11 @@ func _input(event: InputEvent) -> void:
 			HammerType.NONE:
 				printerr("Invalid hammer type")
 		get_tree().set_input_as_handled()
+	elif event.is_action_pressed("carriage_return"):
+		_carriage_return()
+		get_tree().set_input_as_handled()
 
 func _unhandled_key_input(event: InputEventKey):
-#	if (not event.pressed or event.echo):
-#		return
 	if not event.pressed:
 		return
 	var value: float = ((event.scancode as float) / 100.0)
@@ -178,12 +181,13 @@ func _unhandled_key_input(event: InputEventKey):
 #	sprite.frame = round(rand_range(0, 3))
 #	sprite.rotation = randf() * 2 * PI
 	
-	counter.x += HALF_RADIUS
-	if counter.x > width:
-		counter.x = 0.0
-		counter.y += HALF_RADIUS
-		if counter.y > height:
-			counter.y = 0.0
+#	counter.x += HALF_RADIUS
+#	if counter.x > width:
+#		counter.x = 0.0
+#		counter.y += HALF_RADIUS
+#		if counter.y > height:
+#			counter.y = 0.0
+	_increment_counter()
 
 ###############################################################################
 # Connections                                                                 #
@@ -192,6 +196,22 @@ func _unhandled_key_input(event: InputEventKey):
 ###############################################################################
 # Private functions                                                           #
 ###############################################################################
+
+func _increment_counter() -> void:
+	counter.x += HALF_RADIUS
+	if counter.x > width:
+		counter.x = 0.0
+		counter.y += HALF_RADIUS
+		if counter.y > height:
+			counter.y = 0.0
+	emit_signal("cursor_incremented", counter)
+
+func _carriage_return() -> void:
+	counter.x = 0.0
+	counter.y += HALF_RADIUS
+	if counter.y > height:
+		counter.y = 0.0
+	emit_signal("cursor_incremented", counter)
 
 func _show_circle() -> void:
 	circle.visible = true
